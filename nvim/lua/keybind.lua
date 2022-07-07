@@ -3,11 +3,12 @@ function map( mode, shortcut, command)
 end
 
 
-vim.g.mapleader = ' '
 
 -- Variabels
 --
 
+map('n',' ','')
+vim.g.mapleader = ' '
 
 
 map('i','jk','<Esc>')

@@ -13,7 +13,9 @@ require('packer').startup(function()
 
 	--Languages an autoComplete
 	use 'neovim/nvim-lspconfig'
+	use 'williamboman/nvim-lsp-installer' 
 	use 'hrsh7th/nvim-cmp'
+
 
 	use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
 	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
@@ -34,8 +36,6 @@ require('packer').startup(function()
 	  'lewis6991/spellsitter.nvim',
 	}
 	--Other
-	
-
 
 
 
@@ -52,22 +52,19 @@ require'spellsitter'.setup{
     enabled= true
 }
 require('feline').setup()
- 
 
-
-
-
-
+require("nvim-lsp-installer").setup{
+	automatic_installation = true
+}
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'volar', 'html', 'sumneko_lua'  }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     -- on_attach = my_custom_on_attach,
@@ -78,6 +75,8 @@ end
 -- luasnip setup
 local luasnip = require 'luasnip'
 
+
+
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
@@ -86,6 +85,10 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
