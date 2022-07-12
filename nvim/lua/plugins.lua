@@ -2,14 +2,18 @@
 require('packer').startup(function()
 	use 'wbthomason/packer.nvim'
 
-
+	-- Themes
+	use { "EdenEast/nightfox.nvim", tag = "v1.0.0" }
+	use 'ellisonleao/gruvbox.nvim'
 	--visual Plugins
 	use 'ryanoasis/vim-devicons'
-	use 'ellisonleao/gruvbox.nvim'
-	use 'feline-nvim/feline.nvim' 
 	use 'kyazdani42/nvim-web-devicons'
+	use 'feline-nvim/feline.nvim'
 
-
+	use {
+	  'lewis6991/gitsigns.nvim',
+	  -- tag = 'release' -- To use the latest release
+	}
 
 	--Languages an autoComplete
 	use 'neovim/nvim-lspconfig'
@@ -31,18 +35,18 @@ require('packer').startup(function()
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
+	use 'nvim-treesitter/nvim-treesitter-context'
 
 	use { -- Spellcheck using treeSitter
 	  'lewis6991/spellsitter.nvim',
 	}
 	--Other
-
-
-
 end)
 
+vim.opt.termguicolors = true
 require('TelescopeConfig')
 require('TreesitterConfig')
+--require('felineConfig')
 
 
 
@@ -51,7 +55,39 @@ require('TreesitterConfig')
 require'spellsitter'.setup{
     enabled= true
 }
-require('feline').setup()
+
+require('nightfox').setup({
+  options = {
+    -- Compiled file's destination location
+    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+    compile_file_suffix = "_compiled", -- Compiled file suffix
+    transparent = false,    -- Disable setting background
+    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+    dim_inactive = false,   -- Non focused panes set to alternative background
+    styles = {              -- Style to be applied to different syntax groups
+      comments = "NONE",    -- Value is any valid attr-list value `:help attr-list`
+      conditionals = "NONE",
+      constants = "NONE",
+      functions = "NONE",
+      keywords = "NONE",
+      numbers = "NONE",
+      operators = "NONE",
+      strings = "NONE",
+      types = "NONE",
+      variables = "NONE",
+    },
+    inverse = {             -- Inverse highlight for different types
+      match_paren = false,
+      visual = false,
+      search = false,
+    },
+    modules = {             -- List of various plugins and additional options
+      Telescope = true
+
+    },
+  }
+})
+
 
 require("nvim-lsp-installer").setup{
 	automatic_installation = true
@@ -74,7 +110,6 @@ end
 
 -- luasnip setup
 local luasnip = require 'luasnip'
-
 
 
 -- nvim-cmp setup

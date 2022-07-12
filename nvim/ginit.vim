@@ -1,15 +1,7 @@
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-source~\onedrive\documents\.vimrc
-
-
-" Enable Mouse
-set mouse=a
-
 " Set Editor Font
 if exists(':GuiFont')
     " Use GuiFont! to ignore font errors
-    GuiFont {font_name}:h{size}
+    "GuiFont {font_name}:h{size}
 endif
 
 " Disable GUI Tabline
@@ -24,7 +16,7 @@ endif
 
 " Enable GUI ScrollBar
 if exists(':GuiScrollBar')
-    GuiScrollBar 1
+    GuiScrollBar 0
 endif
 
 " Right Click Context Menu (Copy-Cut-Paste)
