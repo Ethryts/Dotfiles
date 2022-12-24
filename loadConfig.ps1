@@ -1,2 +1,2 @@
-Copy-Item -Path  ~/documents/code/dotfiles -Destination ~/AppData/local/nvim  -Recurse -Force -Exclude ".git"
+Copy-Item -Path  ~/code/dotfiles/nvim -Destination ~/AppData/local/nvim  -Recurse -Force -Exclude ".git"
 
