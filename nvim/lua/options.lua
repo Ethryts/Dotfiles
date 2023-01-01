@@ -14,9 +14,10 @@ vim.opt.incsearch = true			-- search incremently
 vim.opt.hlsearch = true				-- highlight search as you type
 vim.opt.mouse = "a"						-- where you can use mouse
 vim.opt.swapfile = false			-- swapfile
-vim.opt.guifont = "'CaskaydiaCove NF':12" --font in gui environments "Font:fontsize"
+vim.opt.guifont = {"CaskaydiaCove NF",":h12"} --font in gui environments "Font:fontsize"
 vim.opt.termguicolors = true
 vim.opt.laststatus=3
+vim.opt.filetype = 'on'
 -- Global Options
 vim.g.noru = true 						-- turno off ruler
-vim.g.netrw_winsize = 15
+vim.g.netrw_winsize = 20

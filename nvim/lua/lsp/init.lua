@@ -39,31 +39,13 @@ vim.diagnostic.config(config)
 
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	local keymap = vim.keymap.set
+	-- local keymap = vim.keymap.set
 	--local keymap = vim.api.keymap
-	local lspbuf = vim.lsp.buf
+	-- local lspbuf = vim.lsp.buf
 	-- Enable completion triggered by <c-x><c-o>
-	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+	-- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- print("on_attach " .. client)
 
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	local bufopts = { noremap = true, silent = true}
-	keymap('n', 'gD', lspbuf.declaration, bufopts)
-	keymap('n', 'gd', lspbuf.definition, bufopts)
-	keymap('n', 'K', lspbuf.hover, bufopts)
-	keymap('n', 'gi', lspbuf.implementation, bufopts)
-	keymap('n', '<C-k>', lspbuf.signature_help, bufopts)
-	keymap('n', '<leader>wa', lspbuf.add_workspace_folder, bufopts)
-	keymap('n', '<leader>wr', lspbuf.remove_workspace_folder, bufopts)
-	keymap('n', '<leader>D', lspbuf.type_definition, bufopts)
-	keymap('n', '<leader>rn', lspbuf.rename, bufopts)
-	keymap('n', '<leader>ca', lspbuf.code_action, bufopts)
-	keymap('n', 'gr', lspbuf.references, bufopts)
-	keymap('n', '<leader>=', lspbuf.format, bufopts)
-	keymap('n', '<leader>wl',
-		function()
-			print(vim.inspect(lspbuf.list_workspace_folders()))
-		end, bufopts)
 end
 
 -- Add additional capabilities supported by nvim-cmp
@@ -76,7 +58,7 @@ local servers = {
     'clangd',
     'rust_analyzer',
     'omnisharp',
-    -- 'pyright',
+    'pyright',
     'pylsp',
     'jedi_language_server',
     'tsserver',

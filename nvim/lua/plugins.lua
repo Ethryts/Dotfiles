@@ -53,7 +53,7 @@ require('packer').startup(function()
 	use 'hrsh7th/cmp-nvim-lsp' -- completion based on LSP source
 	use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
 	use 'L3MON4D3/LuaSnip' -- Snippets Engine plugin
-
+    use 'ThePrimeagen/harpoon'
 	use { -- Auto Brackets
 		"windwp/nvim-autopairs",
 		config = function() require("nvim-autopairs").setup {} end
@@ -66,6 +66,7 @@ require('packer').startup(function()
 	use 'nvim-telescope/telescope-project.nvim'
 	use 'gbrlsnchs/telescope-lsp-handlers'
 	use 'nvim-telescope/telescope-file-browser.nvim'
+    use { 'ghassan0/telescope-glyph.nvim' }
 
 	use {
 		'nvim-treesitter/nvim-treesitter',
@@ -78,20 +79,20 @@ require('packer').startup(function()
 	--}
 	--Other
 	--
-	use({
-  "folke/noice.nvim",
-  config = function()
-    require("noice").setup()
-  end,
-  requires = {
+	-- use({
+  -- "folke/noice.nvim",
+  -- config = function()
+  --   require("noice").setup()
+  -- end,
+  -- requires = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-    "MunifTanjim/nui.nvim",
+    -- "MunifTanjim/nui.nvim",
     -- OPTIONAL:
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   If not available, we use `mini` as the fallback
-    "rcarriga/nvim-notify",
-    }
-})
+    -- "rcarriga/nvim-notify",
+    -- }
+-- })
 end)
 
 require('Comment').setup()
@@ -114,12 +115,8 @@ require("toggleterm").setup({
 
 require('gitsigns').setup({})
 require('TelescopeConfig')
---require('TreesitterConfig')
---require('felineConfig')
 require('neogit').setup {}
---require 'spellsitter'.setup {
---	enabled = true
---}
+
 require('nightfox').setup({
 	options = {
 		-- Compiled file's destination location
@@ -157,112 +154,3 @@ require('nightfox').setup({
 
 
 
-local kind_icons = {
-	Text = '',
-	Method = 'm',
-	Function = '',
-	Constructor = '',
-	FIELD = 'ﭟ',
-	Variable = '',
-	Class = '',
-	Interface = '',
-	Module = '{}',
-	Property = '',
-	Unit = '',
-	Value = '',
-	Enum = '',
-	Keyword = '',
-	Snippet = '',
-	Color = '',
-	File = '',
-	Reference = '',
-	Folder = '',
-	EnumMember = '',
-	Constant = '',
-	Struct = '',
-	Event = '',
-	Operator = '',
-	TypeParameter = '',
-}
-local menuString = {
-	buffer = "[Buffer]",
-	nvim_lsp = "[LSP]",
-	luasnip = "[LuaSnip]",
-	nvim_lua = "[Lua]",
-	latex_symbols = "[LaTeX]",
-}
-
-
-
-
-
-local luasnip = require 'luasnip' -- luasnip setup
-local cmp = require 'cmp' -- nvim-cmp setup
-cmp.setup {
-	formatting = {
-		fields = { "kind", "abbr", "menu" },
-		format = function(entry, vim_item)
-			local prsnt, lspkind = pcall(require, "lspkind")
-			--if not prsnt then
-			-- From kind_icons array
-			--	vim_item.kind = string.format('%s ', kind_icons[vim_item.kind])
-			--else
-			-- From lspkind
-			--vim_item.kind = string.format('%s ', kind_icons[vim_item.kind])
-			--return lspkind.cmp_format()
-			--end
-			vim_item.kind = string.format('%s ', kind_icons[vim_item.kind])
-			-- Kind icons
-			-- Source
-			vim_item.menu = menuString[entry.source.name]
-			return vim_item
-		end
-	},
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end, false
-	},
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
-	mapping = cmp.mapping.preset.insert({
-		['<C-d>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<CR>'] = cmp.mapping.confirm {
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		},
-		['<esc>'] = cmp.mapping {
-			i = cmp.mapping.abort(),
-			c = cmp.mapping.close()
-		},
-		['<Tab>'] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			else
-				fallback()
-			end
-		end, { 'i', 's' }),
-		['<S-Tab>'] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { 'i', 's' }),
-	}),
-	sources = {
-		{ name = 'nvim_lsp' },
-		{ name = 'luasnip' },
-		{ name = 'path' },
-		{ name = 'git' },
-		{ name = 'spell' },
-	},
-}
