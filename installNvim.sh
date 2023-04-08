@@ -1,3 +1,4 @@
+
 echo "copying files to ~/config/"
 cp nvim ~/.config/ -r
 echo "cloning packer to directory"
