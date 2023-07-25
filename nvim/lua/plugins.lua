@@ -24,6 +24,13 @@ require('packer').startup(function()
 		end
 	}
 
+    use {
+        "ThePrimeagen/refactoring.nvim",
+        requires = {
+            {"nvim-lua/plenary.nvim"},
+            {"nvim-treesitter/nvim-treesitter"}
+        }
+    }
 	use {
 		'lewis6991/gitsigns.nvim',
 		-- tag = 'release' -- To use the latest release
@@ -100,6 +107,8 @@ require('Comment').setup()
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_snipmate").lazy_load()
 
+require('refactoring').setup({})
+-- load refactoring Telescope extension
 
 vim.cmd [[colorscheme tokyonight]]
 require("toggleterm").setup({

@@ -1,11 +1,17 @@
 
---vim.cmd([[ :cd %:p:h ]])-- set initial directory to where this was opened from
+--vim.cmd([[ :cd %:p:h ]])  -- set initial directory to where this was opened from
+-- vim.cmd([[ :cd ~/Code/ ]])    -- set initial directory to code
 
 
 
 vim.cmd([[
 	command -nargs=1 T :Telescope <args>
 ]])
+
+vim.cmd([[
+	command -nargs=1 PyToDict :'<,'>s/^ *\(.*\) =\(.*\)/'\1': \2,
+]])
+
 
 
 vim.api.nvim_create_user_command(

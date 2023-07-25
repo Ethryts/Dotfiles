@@ -58,12 +58,16 @@ local servers = {
     'clangd',
     'rust_analyzer',
     'omnisharp',
-    'pyright',
     'pylsp',
-    'jedi_language_server',
+    -- 'jedi_language_server',
     'tsserver',
     'volar',
-    'lua_ls'
+    'html',
+    'lua_ls',
+    'jdtls',
+    'sqlls',
+    'esbonio',
+
 }
 
 for _, lsp in ipairs(servers) do
@@ -73,16 +77,63 @@ for _, lsp in ipairs(servers) do
 	}
 end
 
---spconfig['html'].setup{
---   on_attach = on_attach,
---   capabilities = capabilities,
---	filetypes = { 'handlebars','html'}
---}
+-- lspconfig['pylsp'].setup {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     pylsp = {
+--         plugins = {
+--             flake8 = {
+--                 enabled = true
+--             }
+--         }
+--
+--     }
+-- }
 
+
+lspconfig['pyright'].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        pyright = {
+            pythonVersion = 2.7
+        },
+        python = {
+            analysis = {
+                extraPaths = {
+                    -- "\\\\cldawdetqap01\\Tomcat9\\webapps\\reldev\\WEB-INF\\lib\\Lib",
+                    "Z:/Tomcat9/webapps/reldev/WEB-INF/lib/Lib",
+                    -- "C:/Users/et01048090/Code/devenv/ntr",
+                    -- "C:\\Users\\et01048090\\Code\\Dev Env\\ntr",
+                    -- "C:\\Users\\et01048090\\Code\\Dev Env"
+                },
+            }
+        }
+    }
+}
+
+--
+-- local etq_source = {
+--     name = "etq_source",
+--     filetypes = { ["py"] = true },
+--     methods = { [require("null-ls").methods.COMPLETION] = true },
+--     generator = {
+--         fn = function(params)
+--             vim.api.nvim_echo(params, true)
+--             return "I am a source!"
+--         end,
+--     },
+--     id = 1,
+-- }
 
 null_ls.setup({
 	sources = {
+        null_ls.builtins.code_actions.refactoring,
+        -- etq_source,
+        -- null_ls.builtins.diagnostics.flake8,
+        -- null_ls.builtins.diagnostics.ruff,
 		require("null-ls").builtins.diagnostics.eslint,
 		--        require("null-ls").builtins.completion.spell,
 	},
+	
 })

@@ -1,5 +1,5 @@
 require('options')
-require('neovide')
+-- require('neovide')
 require('plugins')
 require('lualineconfig')
 require('colourscheme')
