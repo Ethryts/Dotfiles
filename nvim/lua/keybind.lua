@@ -1,6 +1,8 @@
 local keymap = vim.keymap.set
 local M = {}
 
+
+
 -- Variabels
 
 local opts = { noremap = true, silent = true }
@@ -23,10 +25,21 @@ keymap('n', '<leader>fg', telescopeBuiltin.live_grep, opts)
 keymap('n', '<leader>fc', telescopeBuiltin.commands, opts)
 keymap('n', '<C-leader>', telescopeBuiltin.quickfix, opts)
 keymap('n', '<leader>fq', telescopeBuiltin.pickers, opts)
+keymap('n', '<leader>ft', telescopeBuiltin.builtin, opts)
 keymap('n', '<leader>fb', telescopeBuiltin.buffers, opts)
 keymap('n', '<leader>fh', telescopeBuiltin.help_tags, opts)
 keymap('n', '<leader>te', telescopeBuiltin.diagnostics, opts)
 keymap('n', '<leader>fp', require("telescope").extensions.project.project, opts)
+
+require("telescope").load_extension("refactoring")
+
+-- remap to open the Telescope refactoring menu in visual mode
+keymap(
+	"v",
+	"<leader>rr",
+	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+	{ noremap = true }
+)
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -55,7 +68,7 @@ function M.cmp_mappings(cmp, luasnip)
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
-        -- ['<Enter>'] = cmp.mapping.complete(),
+        -- ['<enter>'] = cmp.mapping.complete({ select = true }),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
