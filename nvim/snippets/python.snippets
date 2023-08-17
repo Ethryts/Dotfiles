@@ -2,3 +2,14 @@
 snippet warn_func # {{#if value}} ... {{/if}}
 	def warn(msg):
 		thisDocument.addWarning(str(msg))
+
+snippet ifmain # def main ... if main
+	def main(doc):
+		...	
+	
+	if __name__ in ["__builtin__", "__main__"]:
+		main(thisDocument)
+
+snippet stubs # Stubs
+	TYPE_CHECKING = False
+	if TYPE_CHECKING: from stubs import *

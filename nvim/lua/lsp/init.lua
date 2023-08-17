@@ -58,7 +58,7 @@ local servers = {
     'clangd',
     'rust_analyzer',
     'omnisharp',
-    'pylsp',
+    -- 'pylsp',
     -- 'jedi_language_server',
     'tsserver',
     'volar',
@@ -77,6 +77,11 @@ for _, lsp in ipairs(servers) do
 	}
 end
 
+python_lsp = require('lsp.python')
+
+lspconfig['pyright'].setup(python_lsp.get_pyright_config(capabilities))
+
+
 -- lspconfig['pylsp'].setup {
 --     on_attach = on_attach,
 --     capabilities = capabilities,
@@ -89,28 +94,6 @@ end
 --
 --     }
 -- }
-
-
-lspconfig['pyright'].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        pyright = {
-            pythonVersion = 2.7
-        },
-        python = {
-            analysis = {
-                extraPaths = {
-                    -- "\\\\cldawdetqap01\\Tomcat9\\webapps\\reldev\\WEB-INF\\lib\\Lib",
-                    "Z:/Tomcat9/webapps/reldev/WEB-INF/lib/Lib",
-                    -- "C:/Users/et01048090/Code/devenv/ntr",
-                    -- "C:\\Users\\et01048090\\Code\\Dev Env\\ntr",
-                    -- "C:\\Users\\et01048090\\Code\\Dev Env"
-                },
-            }
-        }
-    }
-}
 
 --
 -- local etq_source = {
@@ -125,7 +108,6 @@ lspconfig['pyright'].setup {
 --     },
 --     id = 1,
 -- }
-
 null_ls.setup({
 	sources = {
         null_ls.builtins.code_actions.refactoring,

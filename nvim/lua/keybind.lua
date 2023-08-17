@@ -15,6 +15,7 @@ vim.g.maplocalleader = ' '
 -- Basic keybinds
 keymap("v", "p", '"_dP', opts) -- visual mode paste over will delete to _ register and then paste
 keymap('i', 'jk', '<Esc>', opts)
+keymap('t', 'jk', '<C-\\><C-n>', opts)
 
 -- +++++++++++++++++++++
 --Telescope

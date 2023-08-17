@@ -14,6 +14,16 @@ vim.cmd([[
 
 
 
+-- replace single tabs with 4 tabs
+vim.api.nvim_create_user_command(
+    'PyRetab',
+    function(opts)
+		vim.cmd([[%s/^\s*/&&&&/g]])
+		vim.cmd([[noh]])
+    end,
+    { nargs = 0 }
+)
+
 vim.api.nvim_create_user_command(
     'Run',
     function(opts)
