@@ -39,8 +39,7 @@ require('packer').startup(function()
 
     use {
         'nvim-telescope/telescope-fzf-native.nvim',
-        run =
-        'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
     }
     use "rafamadriz/friendly-snippets"
 
@@ -62,7 +61,7 @@ require('packer').startup(function()
     use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
     use 'L3MON4D3/LuaSnip'         -- Snippets Engine plugin
     use 'ThePrimeagen/harpoon'
-    use {                          -- Auto Brackets
+    use { -- Auto Brackets
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
@@ -110,7 +109,7 @@ require('packer').startup(function()
         config = function()
         end,
 
-        
+
     }
 end)
 
@@ -121,7 +120,7 @@ local yarepl = require 'yarepl'
 
 wincmd = function(bufnr, name)
     if name == 'jython' then
-        vim.api.nvim_buf_set_option(bufnr,"syntax","python")
+        vim.api.nvim_buf_set_option(bufnr, "syntax", "python")
         vim.api.nvim_open_win(bufnr, true, {
             relative = 'win',
             row = math.floor(vim.o.lines * 1.0),
@@ -180,8 +179,6 @@ require('Comment').setup()
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip.loaders.from_snipmate").lazy_load()
 
-require('refactoring').setup({})
--- load refactoring Telescope extension
 
 vim.cmd [[colorscheme tokyonight]]
 require("toggleterm").setup({

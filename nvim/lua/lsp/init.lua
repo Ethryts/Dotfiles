@@ -60,14 +60,12 @@ local servers = {
     'omnisharp',
     -- 'pylsp',
     -- 'jedi_language_server',
+    'pyright',
+    'pylsp',
+    'jedi_language_server',
     'tsserver',
     'volar',
-    'html',
-    'lua_ls',
-    'jdtls',
-    'sqlls',
-    'esbonio',
-
+    'lua_ls'
 }
 
 for _, lsp in ipairs(servers) do
@@ -95,27 +93,16 @@ lspconfig['pyright'].setup(python_lsp.get_pyright_config(capabilities))
 --     }
 -- }
 
---
--- local etq_source = {
---     name = "etq_source",
---     filetypes = { ["py"] = true },
---     methods = { [require("null-ls").methods.COMPLETION] = true },
---     generator = {
---         fn = function(params)
---             vim.api.nvim_echo(params, true)
---             return "I am a source!"
---         end,
---     },
---     id = 1,
--- }
+--spconfig['html'].setup{
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--	filetypes = { 'handlebars','html'}
+--}
+
+
 null_ls.setup({
 	sources = {
-        null_ls.builtins.code_actions.refactoring,
-        -- etq_source,
-        -- null_ls.builtins.diagnostics.flake8,
-        -- null_ls.builtins.diagnostics.ruff,
 		require("null-ls").builtins.diagnostics.eslint,
 		--        require("null-ls").builtins.completion.spell,
 	},
-	
 })
