@@ -22,13 +22,6 @@ function m:get_pyright_config(capabilities)
                 analysis = {
                     pythonVersion = '3.0',
                     extraPaths = {
-                        -- "\\\\cldawdetqap01\\Tomcat9\\webapps\\reldev\\WEB-INF\\lib\\Lib",
-                        -- "Z:/Tomcat9/webapps/reldev/WEB-INF/lib/Lib",
-                        "~/Code/she-etq/",
-                        "~/Code/she-etq/Lib",
-                        -- "C:/Users/et01048090/Code/devenv/ntr",
-                        -- "C:\\Users\\et01048090\\Code\\Dev Env\\ntr",
-                        -- "C:\\Users\\et01048090\\Code\\Dev Env"
                     },
 
                 }
