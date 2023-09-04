@@ -58,9 +58,8 @@ local servers = {
     'clangd',
     'rust_analyzer',
     'omnisharp',
-    -- 'pylsp',
-    -- 'jedi_language_server',
     'pyright',
+    'perlnavigator',
     'pylsp',
     'jedi_language_server',
     'tsserver',
@@ -74,24 +73,6 @@ for _, lsp in ipairs(servers) do
 		capabilities = capabilities,
 	}
 end
-
-python_lsp = require('lsp.python')
-
-lspconfig['pyright'].setup(python_lsp.get_pyright_config(capabilities))
-
-
--- lspconfig['pylsp'].setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---     pylsp = {
---         plugins = {
---             flake8 = {
---                 enabled = true
---             }
---         }
---
---     }
--- }
 
 --spconfig['html'].setup{
 --   on_attach = on_attach,

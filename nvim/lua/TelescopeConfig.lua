@@ -5,7 +5,7 @@ telescope.load_extension 'project'
 telescope.load_extension 'lsp_handlers'
 telescope.load_extension('glyph')
 telescope.load_extension('harpoon')
-telescope.load_extension('REPLShow')
+
 telescope.setup {
     defaults = {
         winbled = 30,
@@ -13,11 +13,7 @@ telescope.setup {
         -- config_key = value,
         file_ignore_patterns = {
             "node_modules",
-            ".git",
-            "__pycache__",
-            ".jython_cache",
-            ".*$py.class",
-            ".*$.pyc",
+            ".git"
         },
         mappings = {
             i = {
