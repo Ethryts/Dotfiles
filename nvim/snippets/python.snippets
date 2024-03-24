@@ -1,15 +1,47 @@
 
-snippet warn_func # {{#if value}} ... {{/if}}
+snippet warn_func # 
 	def warn(msg):
 		thisDocument.addWarning(str(msg))
 
+snippet etqwarn # doc.addWarning(...)
+	doc.addWarning(str($1))
+
+snippet etqinfo # doc.addInformation(...)
+	doc.addInformation(str($1))
+
 snippet ifmain # def main ... if main
 	def main(doc):
+		# type: (PublicDocument)
 		...	
 	
 	if __name__ in ["__builtin__", "__main__"]:
 		main(thisDocument)
 
+snippet etqstart # stubs ... main...
+	import ntr
+	ntr.Start(locals())
+	from ntr.util.error import trace_errors
+	TYPE_CHECKING = 0
+	if TYPE_CHECKING:
+		from stubs import *  # noqa
+
+	@trace_errors
+	def main(doc):
+		# type: (PublicDocument) -> None
+		
+	
+	if __name__ in ["__builtin__", "__main__"]:
+		main(thisDocument)
+
 snippet stubs # Stubs
-	TYPE_CHECKING = False
-	if TYPE_CHECKING: from stubs import *
+	TYPE_CHECKING = 0
+	if TYPE_CHECKING:
+		from stubs import *  # noqa
+
+snippet #t # type: () -> ()
+	# type: ($1) -> $2
+
+snippet importntr # import ntr...
+	import ntr
+	ntr.Start(locals())
+	

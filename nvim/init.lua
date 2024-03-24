@@ -1,6 +1,7 @@
 require('options')
-require('neovide')
+-- require('neovide')
 require('plugins')
+-- require('iron')
 require('lualineconfig')
 require('colourscheme')
 require('customcommands')

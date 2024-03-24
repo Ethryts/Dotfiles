@@ -7,10 +7,10 @@ require'nvim-treesitter.configs'.setup {
 	incremental_selection = {
 		enable = true,
 		keymaps = {
-			init_selection = "gnn",
-			node_incremental = "grn",
-			scope_incremental = "grc",
-			node_decremental = "grm",
+			init_selection = "<CR>",
+			node_incremental = "<CR>",
+			scope_incremental = "<S-TAB>",
+			node_decremental = "<TAB>",
 		},
 	},
 
@@ -25,5 +25,9 @@ require'nvim-treesitter.configs'.setup {
 	indent = {
 		enable = true
 	}
-
 }
+
+vim.opt.foldmethod='expr'
+vim.opt.foldexpr='nvim_treesitter#foldexpr()'
+vim.opt.foldenable=true
+vim.opt.foldlevel=20
