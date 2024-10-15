@@ -8,9 +8,9 @@ local M = {}
 local opts = { noremap = true, silent = true }
 
 -- Leader
-keymap('', '<space>', '<Nop>', opts)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- keymap('', '<space>', '<Nop>', opts)
+-- vim.g.mapleader = ' '
+-- vim.g.maplocalleader = ' '
 
 -- Basic keybinds
 keymap("v", "p", '"_dP', opts) -- visual mode paste over will delete to _ register and then paste
@@ -32,15 +32,15 @@ keymap('n', '<leader>fh', telescopeBuiltin.help_tags, opts)
 keymap('n', '<leader>te', telescopeBuiltin.diagnostics, opts)
 keymap('n', '<leader>fp', require("telescope").extensions.project.project, opts)
 
-require("telescope").load_extension("refactoring")
-
--- remap to open the Telescope refactoring menu in visual mode
-keymap(
-	"v",
-	"<leader>rr",
-	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
-	{ noremap = true }
-)
+-- require("telescope").load_extension("refactoring")
+--
+-- -- remap to open the Telescope refactoring menu in visual mode
+-- keymap(
+-- 	"v",
+-- 	"<leader>rr",
+-- 	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+-- 	{ noremap = true }
+-- )
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -103,18 +103,18 @@ end
 -- +++++++++++++++++++++
 -- Harpoon Mappings
 -- +++++++++++++++++++++
-local harpoon = require('harpoon.mark')
-local harpoonLeader = '<leader>h'
-keymap('n', harpoonLeader .. 'A', function() return harpoon.set_current_at(1) end, opts)
-keymap('n', harpoonLeader .. 'S', function() return harpoon.set_current_at(2) end, opts)
-keymap('n', harpoonLeader .. 'D', function() return harpoon.set_current_at(3) end, opts)
-keymap('n', harpoonLeader .. 'F', function() return harpoon.set_current_at(4) end, opts)
-
-local harpoonUI = require('harpoon.ui')
-keymap('n', harpoonLeader .. 'a', function() return harpoonUI.nav_file(1) end, opts)
-keymap('n', harpoonLeader .. 's', function() return harpoonUI.nav_file(2) end, opts)
-keymap('n', harpoonLeader .. 'd', function() return harpoonUI.nav_file(3) end, opts)
-keymap('n', harpoonLeader .. 'f', function() return harpoonUI.nav_file(4) end, opts)
+-- local harpoon = require('harpoon.mark')
+-- local harpoonLeader = '<leader>h'
+-- keymap('n', harpoonLeader .. 'A', function() return harpoon.set_current_at(1) end, opts)
+-- keymap('n', harpoonLeader .. 'S', function() return harpoon.set_current_at(2) end, opts)
+-- keymap('n', harpoonLeader .. 'D', function() return harpoon.set_current_at(3) end, opts)
+-- keymap('n', harpoonLeader .. 'F', function() return harpoon.set_current_at(4) end, opts)
+--
+-- local harpoonUI = require('harpoon.ui')
+-- keymap('n', harpoonLeader .. 'a', function() return harpoonUI.nav_file(1) end, opts)
+-- keymap('n', harpoonLeader .. 's', function() return harpoonUI.nav_file(2) end, opts)
+-- keymap('n', harpoonLeader .. 'd', function() return harpoonUI.nav_file(3) end, opts)
+-- keymap('n', harpoonLeader .. 'f', function() return harpoonUI.nav_file(4) end, opts)
 -- +++++++++++++++++++++
 --LSP Mappings
 -- +++++++++++++++++++++
