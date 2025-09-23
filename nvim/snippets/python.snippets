@@ -9,13 +9,12 @@ snippet etqwarn # doc.addWarning(...)
 snippet etqinfo # doc.addInformation(...)
 	doc.addInformation(str($1))
 
-snippet ifmain # def main ... if main
+snippet def # def main ... if main
 	def main(doc):
-		# type: (PublicDocument)
 		...	
 	
 	if __name__ in ["__builtin__", "__main__"]:
-		main(thisDocument)
+		main()
 
 snippet etqstart # stubs ... main...
 	import ntr
@@ -45,3 +44,87 @@ snippet importntr # import ntr...
 	import ntr
 	ntr.Start(locals())
 	
+snippet visibilityEdit #
+	import ntr
+	ntr.Start(locals())
+	from ntr.util.error import trace_errors
+	TYPE_CHECKING = 0
+	if TYPE_CHECKING:
+		from stubs import *  # noqa
+
+    EDITABLE, UNEDITABLE  = 1, 0 
+
+	@trace_errors(to=Rutilities.debug)
+	def main():
+        return EDITABLE
+		
+	
+	if __name__ in ["__builtin__", "__main__"]:
+		print(main())
+
+snippet visibilityReadOnly #
+	import ntr
+	ntr.Start(locals())
+	from ntr.util.error import trace_errors
+	TYPE_CHECKING = 0
+	if TYPE_CHECKING:
+		from stubs import *  # noqa
+
+    READONLY,NO   = 1, 0 
+
+	@trace_errors(to=Rutilities.debug)
+	def main():
+        return READONLY
+		
+	
+	if __name__ in ["__builtin__", "__main__"]:
+		print(main())
+
+snippet visibilityBooleanEdit # Edit if boolean
+    """
+    Set Edit for record field when
+    """
+
+    TYPE_CHECKING = 0
+    if TYPE_CHECKING:
+        from stubs import *  # noqa
+
+
+    BOOLEAN_FIELD = ""
+    EDIT_WHEN_VALUE = True
+
+
+    def main(doc):
+        # type: (PublicSubformRecord | PublicDocument) -> bool
+        value = doc.getFieldValue(BOOLEAN_FIELD)
+        return value == EDIT_WHEN_VALUE
+
+
+    if __name__ in ["__builtin__", "__main__"]:
+        print(main(thisSubformRecord or thisDocument))
+
+snippet decorator # Decorator Stub
+
+    def decorator(func):
+        """
+        
+        """
+        @functools.wraps(func)
+        def wrapper_decorator(*args, **kwargs):
+            # Before
+            value = func(*args, **kwargs)
+            # After
+            return value
+        return wrapper_decorator
+        
+snippet decoratorArgument # Decorator Stub
+
+    def decorator(argument):
+        def decorator_inner(func):
+            def wrapper(*args, **kwargs):
+                # Before
+                result = func(*args, **kwargs)
+                # After
+                return result
+            return wrapper
+        return decorator 

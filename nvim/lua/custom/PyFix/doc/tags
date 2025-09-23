@@ -1,0 +1,5 @@
+PyFix.disable()	neovim-plugin-boilerplate.txt	/*PyFix.disable()*
+PyFix.enable()	neovim-plugin-boilerplate.txt	/*PyFix.enable()*
+PyFix.options	neovim-plugin-boilerplate.txt	/*PyFix.options*
+PyFix.setup()	neovim-plugin-boilerplate.txt	/*PyFix.setup()*
+PyFix.toggle()	neovim-plugin-boilerplate.txt	/*PyFix.toggle()*

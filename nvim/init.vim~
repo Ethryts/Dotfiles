@@ -1,9 +1,0 @@
-call plug#begin()
-	Plug 'ellisonleao/gruvbox.nvim'
-	Plug '
-call plug#end()
-
-set background=dark
-colorscheme gruvbox
-
-imap jk <Esc>

@@ -1,0 +1,12 @@
+snippet enum # 
+    type $1 int
+
+    const (
+        $2 = iota
+        $3
+    )
+
+snippet iferr # 
+    if err != nil{
+        return fmt.Errorf("$1 : %w", err)
+    }

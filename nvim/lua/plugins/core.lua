@@ -14,10 +14,12 @@
 --         end
 --     end
 -- end
+--
+--
 local kind_icons = {
     Text = '',
     Method = 'm',
-    Function = '',
+    Function = '󰊕',
     Constructor = '',
     FIELD = 'ﭟ',
     Variable = '',
@@ -42,17 +44,23 @@ local kind_icons = {
     TypeParameter = '',
 }
 local menuString = {
-    buffer = "[Buffer]",
+    buffer = "[Buf]",
     nvim_lsp = "[LSP]",
-    luasnip = "[LuaSnip]",
+    luasnip = "[Snip]",
+    vim_dadbod_completion = "[DB]",
     nvim_lua = "[Lua]",
-    latex_symbols = "[LaTeX]",
+    latex_symbols = "[TeX]",
+    path = "[Path]"
 }
 
 return {
 
-    { "tpope/vim-fugitive",     lazy = true },
     {
+        "tpope/vim-fugitive",
+        event = "VeryLazy",
+    },
+    {
+        enabled=false,
         'hrsh7th/nvim-cmp',
         event = "VeryLazy",
         dependencies = {
@@ -60,12 +68,15 @@ return {
             'hrsh7th/cmp-git',          -- completion based on git branches and stuff
             'hrsh7th/cmp-nvim-lsp',     -- completion based on LSP source
             'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
-            'L3MON4D3/LuaSnip',         -- Snippets Engine plugin
+            'kristijanhusak/vim-dadbod-completion',
+            'kyazdani42/nvim-web-devicons',
         },
-        config = function()
-            local luasnip = require 'luasnip' -- luasnip setup
-            local cmp = require 'cmp'         -- nvim-cmp setup
+        config = function(luasnip, opts)
+            local luasnip = require('luasnip') -- luasnip setup
+            local cmp = require('cmp')         -- nvim-cmp setup
             cmp.setup({
+                preselect = cmp.PreselectMode.None,
+                completion = { completeopt = "menu,menuone,noselect" },
                 formatting = {
                     fields = { "kind", "abbr", "menu" },
                     format = function(entry, vim_item)
@@ -84,26 +95,41 @@ return {
                     false
                 },
                 window = {
-                    completion = cmp.config.window.bordered(),
+                    completion = cmp.config.window.bordered({max_height=100}),
                     documentation = cmp.config.window.bordered(),
+                    vim.snippet
                 },
                 mapping = cmp.mapping.preset.insert(
                     require('keybind').cmp_mappings(cmp, luasnip)
                 ),
                 sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'path' },
-                    { name = 'git' },
-                    { name = 'spell' },
-                    { name = "lazydev", group_index = 0 },
+                    { name = 'nvim_lsp', priority=5},
+                    { name = "vim-dadbod-completion", priority=5},
+                    { name = 'luasnip' , priority=3},
+                    { name = 'path' , priority=3},
+                    { name = 'git' , priority=3},
+                    { name = 'spell' , priority=3},
+                    { name = "lazydev", group_index = 0 , priority=5},
                 },
                 experimental = {
-                    ghost_text = true
-                }
+                    ghost_text = true,
+                },
+                store_selection_keys="<Tab>",
             })
         end,
-    }, -- completion ctr space
+    },                      -- completion ctr space
+    {
+        'L3MON4D3/LuaSnip', -- Snippets Engine plugin
+        event = "VeryLazy",
+        dependencies = {
+            "rafamadriz/friendly-snippets"
+
+        },
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+            require("luasnip.loaders.from_snipmate").lazy_load()
+        end
+    },
 
     {
         "vhyrro/luarocks.nvim",
@@ -112,7 +138,7 @@ return {
     },                   -- This is for luarocks, used by other plugins
     {
         "nvim-treesitter/nvim-treesitter",
-        lazy = true,
+        event = "VeryLazy",
         opts = {
 
             -- A list of parser names, or "all"
@@ -141,247 +167,22 @@ return {
             indent = {
                 enable = true
             }
-        }
-    },
-    { 'TimUntersberger/neogit', dependencies = 'nvim-lua/plenary.nvim', lazy = 'true' },
+        },
+        config=function(ts,opts)
+            vim.opt.foldmethod = 'expr'
+            vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+            vim.opt.foldenable = true
+            vim.opt.foldlevel = 20
+            require("nvim-treesitter.configs").setup(opts)
+            -- ts.setup(opts)
 
-    {
-        'nvim-telescope/telescope.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'BurntSushi/ripgrep'
-        }
+        end
     },
-    'nvim-telescope/telescope-project.nvim',
+    {"nvim-treesitter/playground", dependencies="nvim-treesitter/nvim-treesitter"},
     {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        run =
-        'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+        'TimUntersberger/neogit',
+        dependencies = 'nvim-lua/plenary.nvim',
+        event = "VeryLazy",
     },
-    {
-        'stevearc/conform.nvim',
-        opts = {},
-    }
-
 
 }
--- ---@diagnostic disable: undefined-global
---
--- require('packer').startup(function()
---     use 'tpope/vim-fugitive'
---     -- Themes
---
---
---
---     use {
---         "ThePrimeagen/refactoring.nvim",
---         requires = {
---             { "nvim-lua/plenary.nvim" },
---             { "nvim-treesitter/nvim-treesitter" }
---         }
---     }
---     use {
---         'lewis6991/gitsigns.nvim',
---         -- tag = 'release' -- To use the latest release
---     }
---     use 'jose-elias-alvarez/null-ls.nvim'
---
---     use {
---         'nvim-telescope/telescope-fzf-native.nvim',
---         run =
---         'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
---     }
---     use "rafamadriz/friendly-snippets"
---
---     use { "akinsho/toggleterm.nvim", tag = '*', config = function()
---         require("toggleterm").setup()
---     end }
---
---     use "folke/neodev.nvim"
---     --use 'hrsh7th/cmp-spell'					-- completion based on spelling
---     use 'ThePrimeagen/harpoon'
---     use {                          -- Auto Brackets
---         "windwp/nvim-autopairs",
---         config = function() require("nvim-autopairs").setup {} end
---     }
---     use 'nvim-lua/plenary.nvim'
---     use {
---         'nvim-telescope/telescope.nvim',
---         requires = { { 'nvim-lua/plenary.nvim' }, { 'BurntSushi/ripgrep' } }
---     }
---     use 'nvim-telescope/telescope-project.nvim'
---     use 'gbrlsnchs/telescope-lsp-handlers'
---     use 'nvim-telescope/telescope-file-browser.nvim'
---     use { 'ghassan0/telescope-glyph.nvim' }
---
---     use {
---         'nvim-treesitter/nvim-treesitter',
---         run = ':TSUpdate'
---     }
---     use 'nvim-treesitter/nvim-treesitter-context'
---     use 'mfussenegger/nvim-jdtls'
---
---     --use { -- Spellcheck using treeSitter
---     --'lewis6991/spellsitter.nvim',
---     --}
---     --Other
---     --
---     -- use({
---     -- "folke/noice.nvim",
---     -- config = function()
---     --   require("noice").setup()
---     -- end,
---     -- requires = {
---     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
---     -- "MunifTanjim/nui.nvim",
---     -- OPTIONAL:
---     --   `nvim-notify` is only needed, if you want to use the notification view.
---     --   If not available, we use `mini` as the fallback
---     -- "rcarriga/nvim-notify",
---     -- }
---     -- })
---
---     -- python
---     -- use { 'Vigemus/iron.nvim' }
---     -- use { 'MunifTanjim/nui.nvim' }
---     -- use { 'smzm/hydrovim' }
---     use { 'milanglacier/yarepl.nvim',
---         config = function()
---         end,
---
---
---     }
---
---
---     -- use { 'tpope/vim-dadbod' }
---     -- use { 'kristijanhusak/vim-dadbod-ui' }
---     -- use 'nanotee/sqls.nvim'
--- end)
--- local config = {
---     cmd = {[[C:\Users\et01048090\AppData\Local\nvim-data\mason\bin\jdtls.CMD]]},
---     root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
--- }
--- require('jdtls').start_or_attach(config)
---
--- require('lspconfig').sqls.setup{
---     on_attach = function(client, bufnr)
---         require('sqls').on_attach(client, bufnr)
---     end
--- }
--- -- below is the default configuration, there's no need to copy paste them if
--- -- you are satisfied with the default configuration, just calling
--- -- `require('yarepl').setup {}` is sufficient.
--- local yarepl = require 'yarepl'
---
--- wincmd = function(bufnr, name)
---     if name == 'jython' then
---         vim.api.nvim_buf_set_option(bufnr, "syntax", "python")
---         vim.api.nvim_open_win(bufnr, true, {
---             relative = 'win',
---             row = math.floor(vim.o.lines * 1.0),
---             col = math.floor(vim.o.columns * 1.0),
---             width = math.floor(vim.o.columns * 0.5),
---             height = math.floor(vim.o.lines * 0.3),
---             anchor = "SE",
---             style = 'minimal',
---             title = name,
---             border = 'rounded',
---             title_pos = 'right',
---         })
---     else
---         vim.cmd [[belowright 15 split]]
---         vim.api.nvim_set_current_buf(bufnr)
---     end
--- end
--- yarepl.setup {
---     -- see `:h buflisted`, whether the REPL buffer should be buflisted.
---     buflisted = true,
---     -- whether the REPL buffer should be a scratch buffer.
---     scratch = true,
---     -- the filetype of the REPL buffer created by `yarepl`
---     ft = 'REPL',
---     -- How yarepl open the REPL window, can be a string or a lua function.
---     -- See below example for how to configure this option
---     wincmd = wincmd,
---     -- The available REPL palattes that `yarepl` can create REPL based on
---     metas = {
---         -- aichat = { cmd = 'aichat', formatter = yarepl.formatter.bracketed_pasting },
---         -- radian = { cmd = 'radian', formatter = yarepl.formatter.bracketed_pasting },
---         -- ipython = { cmd = 'ipython', formatter = yarepl.formatter.bracketed_pasting },
---         jython = { cmd = 'jython', formatter = yarepl.formatter.trim_empty_lines },
---         python = { cmd = 'python', formatter = yarepl.formatter.trim_empty_lines },
---         -- R = { cmd = 'R', formatter = yarepl.formatter.trim_empty_lines },
---         bash = { cmd = 'bash', formatter = yarepl.formatter.trim_empty_lines },
---         zsh = { cmd = 'zsh', formatter = yarepl.formatter.bracketed_pasting },
---     },
---     -- when a REPL process exits, should the window associated with those REPLs closed?
---     close_on_exit = true,
---     -- whether automatically scroll to the bottom of the REPL window after sending
---     -- text? This feature would be helpful if you want to ensure that your view
---     -- stays updated with the latest REPL output.
---     scroll_to_bottom_after_sending = true,
---     os = {
---         -- Some hacks for Windows. macOS and Linux users can simply ignore
---         -- them. The default options are recommended for Windows user.
---         windows = {
---             -- Send a final `\r` to the REPL with delay,
---             send_delayed_cr_after_sending = true,
---         },
---     },
--- }
--- require('Comment').setup()
---
--- require("luasnip.loaders.from_vscode").lazy_load()
--- require("luasnip.loaders.from_snipmate").lazy_load()
---
--- require('refactoring').setup({})
--- -- load refactoring Telescope extension
---
--- vim.cmd [[colorscheme tokyonight]]
--- require("toggleterm").setup({
---     open_mapping = [[<c-T>]],
---     -- shell = 'bash',
---     winbar = {
---         enabled = true,
---         name_formatter = function(term) --  term: Terminal
---             return term.name
---         end
---     }
--- })
---
---
--- require('gitsigns').setup({})
--- require('TelescopeConfig')
--- -- require('neogit').setup {}
---
--- require('nightfox').setup({
---     options = {
---         -- Compiled file's destination location
---         compile_path = vim.fn.stdpath("cache") .. "/nightfox",
---         compile_file_suffix = "_compiled", -- Compiled file suffix
---         transparent = false,               -- Disable setting background
---         terminal_colors = true,            -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
---         dim_inactive = false,              -- Non focused panes set to alternative background
---         styles = {                         -- Style to be applied to different syntax groups
---             comments = "NONE",             -- Value is any valid attr-list value `:help attr-list`
---             conditionals = "NONE",
---             constants = "NONE",
---             functions = "NONE",
---             keywords = "NONE",
---             numbers = "NONE",
---             operators = "NONE",
---             strings = "NONE",
---             types = "NONE",
---             variables = "NONE",
---         },
---         inverse = { -- Inverse highlight for different types
---             match_paren = false,
---             visual = false,
---             search = false,
---         },
---         modules = { -- List of various plugins and additional options
---             Telescope = true
---
---         },
---     }
--- })

@@ -1,3 +1,13 @@
+-- vim.cmd([[colorscheme tokyonight-night]])
+vim.cmd([[colorscheme onedark]])
+-- vim.cmd([[hi WinSeparator cterm=bold gui=bold guifg=grey]])
+vim.api.nvim_set_hl(0, 'WinSeparator', {fg='#485F91', bg='', bold=true})
+local LineNr = vim.api.nvim_get_hl(0, {name='LineNr'})
+-- vim.api.nvim_set_hl(0, 'LineNr', {fg='#aea5a8', bg='', bold=true})
+vim.api.nvim_set_hl(0, "LineNr", { link = "Special" })
+vim.api.nvim_set_hl(0, 'LineNrAbove', LineNr)
+vim.api.nvim_set_hl(0, 'LineNrBelow', LineNr)
+--
 -- vim.opt.background = "dark" -- or "light" faor light mode
 -- vim.cmd([[
 -- 	augroup user_colors
@@ -16,5 +26,5 @@
 -- ]])
 --
 
-vim.cmd("colorscheme tokyonight-night")
-vim.cmd("hi LineNr guifg = lightgrey")
+-- vim.cmd("colorscheme tokyonight-night")
+-- vim.cmd("hi LineNr guifg = lightgrey")
