@@ -8,7 +8,7 @@ local header = {
  
 }
 return {
-    { 'lewis6991/gitsigns.nvim',      lazy = true },
+    { 'lewis6991/gitsigns.nvim'},
     { 'ryanoasis/vim-devicons',       lazy = true },
     { 'kyazdani42/nvim-web-devicons', lazy = true },
     -- {

@@ -42,6 +42,8 @@ keymap('n', '<leader>fp', require("telescope").extensions.project.project,
 keymap('n', '<leader>ft', require("telescope").extensions.picker_list.picker_list,
     { noremap = true, silent = true, desc = "Find Telescope Pickers" })
 
+keymap('n','<leader>/', "<cmd>execute 'lvimgrep /'.@/.'/ % | lopen'<CR>", {noremap=true, silent = true, desc = "Open Last search in local quick fix list"})
+
 -- require("telescope").load_extension("refactoring")
 --
 -- -- remap to open the Telescope refactoring menu in visual mode

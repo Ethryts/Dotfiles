@@ -2,3 +2,4 @@
 lazy-lock.json
 packer_compiled.lua
 *:Zone.Identifier
+*_env.lua

@@ -7,7 +7,10 @@ return {
             marksman = {
                 filetypes = { "markdown", "quarto" }
             },
+            sqls = {
+            },
             sqlls = {
+                enabled = false
             },
             omnisharp = {
                 cmd = { "omnisharp" }, -- Mason installs OmniSharp with this name by default
@@ -111,10 +114,10 @@ return {
                                 reportUntypedNamedTuple = false,
                                 reportExplicitAny = false,
                                 reportAny = false,
+                                reportUnusedCallResult = 'information',
                             },
-                            extraPaths = {
-                              --
-                            }
+
+                            extraPaths = require("lsp_env").python.extraPaths
                         }
                     }
                 }
