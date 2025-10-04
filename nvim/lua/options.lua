@@ -29,7 +29,7 @@ vim.diagnostic.config({
 vim.g.noru = true -- turno off ruler
 vim.g.netrw_winsize = 20
 -- vim.env.HOME = vim.env.USERPROFILE
-vim.opt_global.winborder = "rounded"
+vim.opt_global.winborder = "single"
 
 -- aunmenu PopUp.How-to\ disable\ mouse
 -- aunmenu PopUp.-1-

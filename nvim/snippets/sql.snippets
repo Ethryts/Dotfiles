@@ -1,0 +1,10 @@
+snippet JSONLoad
+    DECLARE @json_data NVARCHAR(MAX) =N'
+        $1
+    '
+    SELECT *
+    FROM OPENJSON(@json_data)
+    WITH (
+        -- name NVARCHAR(100) '$.name'
+    )
+

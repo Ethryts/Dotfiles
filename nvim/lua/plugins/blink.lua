@@ -3,6 +3,9 @@ return {
     -- optional: provides snippets for the snippet source
     dependencies = {
         'rafamadriz/friendly-snippets',
+
+        {'fang2hou/blink-copilot', opts={}},
+        -- 'Kaiser-Yang/blink-cmp-avante',
         { 'Kaiser-Yang/blink-cmp-dictionary', dependencies = { 'nvim-lua/plenary.nvim' } }
     },
 
@@ -40,16 +43,37 @@ return {
         },
 
         -- (Default) Only show the documentation popup when manually triggered
-        completion = { documentation = { auto_show = false } },
+        completion = { documentation = { auto_show = false }, trigger = { prefetch_on_insert = false } },
 
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer', },
+            default = {  'lsp',"copilot", 'path', 'snippets', 'buffer', },
             per_filetype = {
                 sql = { inherit_defaults = true, 'dictionary' }
             },
             providers = {
+                copilot = {
+                    name = "copilot",
+                    module = "blink-copilot",
+                    score_offset = 100,
+                    async = true,
+                    opts = {
+                        -- Local options override global ones
+                        max_completions = 3, -- Override global max_completions
+
+                        -- Final settings:
+                        -- * max_completions = 3
+                        -- * max_attempts = 2
+                        -- * all other options are default
+                    }
+                },
+
+                -- avante = {
+                --     module = 'blink-cmp-avente',
+                --     name = 'Avante',
+                --     opts =  {}
+                -- },
                 dictionary = {
                     module = "blink-cmp-dictionary",
                     name = "Tables",
@@ -82,9 +106,9 @@ return {
                                 return { vim.fn.expand("~/nvim-data/columns.dict") }
                             end
                         end,
-                    },
-                    case_insensitive = true,
+                    -- case_insensitive = true,
                     min_keyword_length = 1,
+                    },
                 }
 
             }

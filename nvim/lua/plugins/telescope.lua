@@ -1,5 +1,5 @@
 return {
-    {'ghassan0/telescope-glyph.nvim', lazy=true, dependencies={'kyazdani42/nvim-web-devicons'}},
+    { 'ghassan0/telescope-glyph.nvim', lazy = true, dependencies = { 'kyazdani42/nvim-web-devicons' } },
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
@@ -20,6 +20,9 @@ return {
         },
         opts = {
             defaults = {
+                borderchars          = 
+                    { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
+                ,
                 mappings             = {
                     n = {
                         ['<C-y>'] = "select_default"
@@ -59,8 +62,15 @@ return {
                 glyph = {},
                 -- fzf = {},
                 ["ui-select"] = {
-                    -- require('telescope.themes').get_cursor({})
-                    -- require("telescope.themes").get_dropdown( { })
+                    require("telescope.themes").get_dropdown({
+                        borderchars = {
+                            { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+                            prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+                            results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+                            preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+                        },
+
+                    })
                     -- layout_strategy = "cursor"
                 },
                 picker_list = {},

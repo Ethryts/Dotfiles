@@ -7,6 +7,7 @@ return {
             marksman = {
                 filetypes = { "markdown", "quarto" }
             },
+            -- copilot = {},
             sqls = {
             },
             sqlls = {
