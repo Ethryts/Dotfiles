@@ -1,12 +1,15 @@
 return {
     {
+
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
         ---@module 'render-markdown'
         ---@type render.md.UserConfig
-        opts = {},
+        opts = {
+            file_types = { 'markdown', 'codecompanion' },
+        },
     },
     {
         "iamcco/markdown-preview.nvim",
@@ -18,11 +21,12 @@ return {
         config = function()
             vim.cmd([[
             function OpenMarkdownPreview (url)
-                execute "silent ! start chrome --app=" . a:url
+                " execute "silent ! start chrome --app=" . a:url
+                " execute "silent !  chrome --app=" . a:url
+                execute "silent ! open -a chrome.exe -n --args --new-window " . a:url
             endfunction
             let g:mkdp_browserfunc = 'OpenMarkdownPreview'
             ]])
-
         end,
         ft = { "markdown" },
     },

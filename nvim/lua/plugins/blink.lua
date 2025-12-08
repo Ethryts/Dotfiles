@@ -1,10 +1,17 @@
+local patterns = {
+    "from",
+    "join",
+    "update",
+    "into",
+    "table",
+}
 return {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
     dependencies = {
         'rafamadriz/friendly-snippets',
 
-        {'fang2hou/blink-copilot', opts={}},
+        { 'fang2hou/blink-copilot',           opts = {} },
         -- 'Kaiser-Yang/blink-cmp-avante',
         { 'Kaiser-Yang/blink-cmp-dictionary', dependencies = { 'nvim-lua/plenary.nvim' } }
     },
@@ -15,7 +22,6 @@ return {
     -- build = 'cargo build --release',
     -- If you use nix, you can build from source using latest nightly rust with:
     -- build = 'nix run .#build-plugin',
-
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -48,7 +54,7 @@ return {
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
-            default = {  'lsp',"copilot", 'path', 'snippets', 'buffer', },
+            default = { 'lsp', 'snippets','path', 'buffer', },
             per_filetype = {
                 sql = { inherit_defaults = true, 'dictionary' }
             },
@@ -77,37 +83,56 @@ return {
                 dictionary = {
                     module = "blink-cmp-dictionary",
                     name = "Tables",
+                    min_keyword_length = 2,
                     opts = {
+                        get_insert_text = function(item)
+                            local right = item:match("%.([^%.]+)")
+                            if right then
+                                return right
+                            end
+                            return item
+                        end,
                         dictionary_files = function()
-                            local line = vim.api.nvim_get_current_line():lower()
-                            local window = vim.api.nvim_get_current_win()
-                            local col = vim.api.nvim_win_get_cursor(window)[2]
-                            local before = line:sub(1, col) -- Remove one or it will pick up next char
-
-                            local patterns = {
-                                "from",
-                                "join",
-                                "update",
-                                "into",
-                                "table",
+                            local dictsPaths = {
+                                schema = vim.fn.expand("~/nvim-data/schemas.dict"),
+                                table = vim.fn.expand("~/nvim-data/tables.dict"),
+                                column = vim.fn.expand("~/nvim-data/columns.dict")
                             }
-                            local isTable = false
+                            local window = vim.api.nvim_get_current_win()
+                            local cursor = vim.api.nvim_win_get_cursor(window)
+                            local row, col = cursor[1], cursor[2]
+
+                            -- Get all lines up to the cursor row
+                            local lines = vim.api.nvim_buf_get_lines(0, 0, row, false)
+                            local before = ""
+                            if #lines > 0 then
+                                -- Concatenate all previous lines
+                                for i = 1, #lines - 1 do
+                                    before = before .. lines[i] .. "\n"
+                                end
+                                -- Add the current line up to the cursor column
+                                before = before .. lines[#lines]:sub(1, col)
+                            end
+                            before = before:match("^%s*(.-)%s*$") -- trim whitespace
+
                             local head = before:gsub("%s[%w_%.]+$", "")
                             local keyword = head:match("([%w]+)$")
                             for _, i in ipairs(patterns) do
                                 if keyword == i then
-                                    isTable = true
-                                    break
+                                    local last_word = before:match("([%w_%.]+)$")
+                                    if last_word then
+                                        last_word = last_word:match("^%s*(.-)%s*$") -- trim whitespace
+                                        -- Match schema.table, ignoring spaces around period
+                                        if last_word:match("([%w_]+)%s*%.%s*[%w_]+") then
+                                            return { dictsPaths.table }
+                                        end
+                                    end
+                                    return { dictsPaths.schema }
                                 end
                             end
-                            if isTable then
-                                return { vim.fn.expand("~/nvim-data/schema_tables.dict") }
-                            else
-                                return { vim.fn.expand("~/nvim-data/columns.dict") }
-                            end
+                            return { dictsPaths.column }
                         end,
-                    -- case_insensitive = true,
-                    min_keyword_length = 1,
+                        case_insensitive = true,
                     },
                 }
 
