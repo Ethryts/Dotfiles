@@ -191,7 +191,6 @@ return {
                 "lua_ls",
                 "bashls",
                 "vtsls",
-                "typescriptls",
                 "basedpyright",
             }
         }

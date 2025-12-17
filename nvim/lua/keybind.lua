@@ -28,17 +28,16 @@ local fzf = require('fzf-lua')
 
 local file_picker = fzf.files
 -- keymap('n', '<leader>ff', telescopeBuiltin.find_files, { noremap = true, silent = true, desc = "Find File" })
-keymap('n', '<leader>ff', file_picker, { noremap = true, silent = true, desc = "Find File" })
-keymap('n', '<leader>fg', telescopeBuiltin.live_grep, { noremap = true, silent = true, desc = "Find Grep" })
-keymap('n', '<leader>fc', telescopeBuiltin.commands, { noremap = true, silent = true, desc = "Find Commands" })
-keymap('n', '<C-Space>', telescopeBuiltin.quickfix, { noremap = true, silent = true, desc = "Find Quickfix" })
-keymap('n', '<leader>fq', telescopeBuiltin.pickers, { noremap = true, silent = true, desc = "Find Pickers" })
+keymap('n', '<leader>ff', fzf.files, { noremap = true, silent = true, desc = "Find File" })
+keymap('n', '<leader>fg', fzf.live_grep, { noremap = true, silent = true, desc = "Find Grep" })
+keymap('n', '<leader>fc', fzf.commands, { noremap = true, silent = true, desc = "Find Commands" })
+keymap('n', '<C-Space>', fzf.quickfix, { noremap = true, silent = true, desc = "Find Quickfix" })
+-- keymap('n', '<leader>fq', telescopeBuiltin.pickers, { noremap = true, silent = true, desc = "Find Pickers" })
 -- keymap('n', '<leader>ft', telescopeBuiltin.builtin, { noremap = true, silent = true, desc = "Find Builtins" })
-keymap('n', '<leader>fb', telescopeBuiltin.buffers, { noremap = true, silent = true, desc = "Find Buffers" })
-keymap('n', '<leader>fh', telescopeBuiltin.help_tags, { noremap = true, silent = true, desc = "Find Help Tags" })
-keymap('n', '<leader>fd', telescopeBuiltin.diagnostics, { noremap = true, silent = true, desc = "Find Diagnostics" })
-keymap('n', '<leader>fp', require("telescope").extensions.project.project,
-    { noremap = true, silent = true, desc = "Find Project" })
+keymap('n', '<leader>fb', fzf.buffers, { noremap = true, silent = true, desc = "Find Buffers" })
+keymap('n', '<leader>fh', fzf.help_tags, { noremap = true, silent = true, desc = "Find Help Tags" })
+keymap('n', '<leader>fd', fzf.diagnostics_workspace, { noremap = true, silent = true, desc = "Find Diagnostics" })
+keymap('n', '<leader>fp', require("telescope").extensions.project.project, { noremap = true, silent = true, desc = "Find Project" })
 keymap('n', '<leader>ft', require("telescope").extensions.picker_list.picker_list,
     { noremap = true, silent = true, desc = "Find Telescope Pickers" })
 

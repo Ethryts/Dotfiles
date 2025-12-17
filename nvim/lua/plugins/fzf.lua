@@ -6,17 +6,22 @@ return {
     -- dependencies = { "echasnovski/mini.icons" },
     opts = function(_, opts)
         local fzf = require("fzf-lua")
-
         return {
+            fzf_opts = {
+                ["--bind"] = {
+                    ["tab:toggle"] = "",
+                    ["ctrl-space:toggle+down"] = "",
+                },
+            },
             keymap = {
-                builtin={
+                builtin = {
                     ["<C-u>"] = "preview-page-up",
                     ["<C-d>"] = "preview-page-down",
                 }
             },
             actions = {
                 files = {
-                        ["ctrl-y"] = fzf.actions.file_edit_or_qf,
+                    ["ctrl-y"] = fzf.actions.file_edit_or_qf,
                 }
             }
         }
