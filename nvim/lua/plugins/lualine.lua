@@ -8,16 +8,34 @@ return {
             component_separators = { left = '', right = '' },
             section_separators = { left = '', right = '' },
             disabled_filetypes = {
-                statusline = {},
-                winbar = { 'toggleterm' },
+                winbar = { 'toggleterm', 'Avante', 'AvanteTodos', 'AvanteInput' },
             },
             ignore_focus = {},
             always_divide_middle = true,
             globalstatus = true,
-            refresh = {
-                statusline = 2000,
-                tabline = 2000,
-                winbar = 2000,
+        },
+        tabline = {
+            -- this is the line at the top that contains different tabs
+            lualine_a = {
+                {
+                    'tabs',
+                    max_length = vim.o.columns / 3,      -- Maximum width of tabs component.
+                    mode = 2,
+                    active = 'lualine_{section}_normal', -- Color for active tab.
+                    inactive = 'lualine_{section}_inactive', -- Color for inactive tab.
+
+
+                    --		  separator = {left="",right=""},      -- Determines what separator to use for the component.
+
+                },'avante'
+
+            },
+            lualine_b = {},
+            lualine_c = {},
+            lualine_x = {},
+            lualine_y = {},
+            lualine_z = {
+                -- 'windows' -- This is for the window line at the top right
             }
         },
         sections = {
@@ -52,7 +70,7 @@ return {
                 'filename',
                 file_status = true, -- Displays file status (readonly status, modified status)
                 newfile_status = false, -- Display new file status (new file means no write after created)
-                path = 0,           -- 0: Just the filename
+                path = 1,           -- 0: Just the filename
                 -- 1: Relative path
                 -- 2: Absolute path
                 -- 3: Absolute path, with tilde as the home directory
@@ -69,30 +87,6 @@ return {
             lualine_y = {},
             lualine_z = {}
         },
-        tabline = {
-            -- this is the line at the top that contains different tabs
-            lualine_a = {
-                {
-                    'tabs',
-                    max_length = vim.o.columns / 3,      -- Maximum width of tabs component.
-                    mode = 2,
-                    active = 'lualine_{section}_normal', -- Color for active tab.
-                    inactive = 'lualine_{section}_inactive', -- Color for inactive tab.
-
-
-                    --		  separator = {left="",right=""},      -- Determines what separator to use for the component.
-
-                }
-
-            },
-            lualine_b = {},
-            lualine_c = {},
-            lualine_x = {},
-            lualine_y = {},
-            lualine_z = {
-                -- 'windows' -- This is for the window line at the top right
-            }
-        },
         winbar = {
             -- This is the line at the top of each window/pane
             lualine_a = {},
@@ -101,7 +95,7 @@ return {
                 'filename',
                 file_status = true, -- Displays file status (readonly status, modified status)
                 newfile_status = false, -- Display new file status (new file means no write after created)
-                path = 0,           -- 0: Just the filename
+                path = 1,           -- 0: Just the filename
                 -- 1: Relative path
                 -- 2: Absolute path
                 -- 3: Absolute path, with tilde as the home directory
@@ -120,12 +114,12 @@ return {
         },
         inactive_winbar = {
             lualine_a = {},
-            lualine_b = {},
+            lualine_b = {'diff', 'diagnostics'},
             lualine_c = { {
                 'filename',
                 file_status = true, -- Displays file status (readonly status, modified status)
                 newfile_status = false, -- Display new file status (new file means no write after created)
-                path = 0,           -- 0: Just the filename
+                path = 1,           -- 0: Just the filename
                 -- 1: Relative path
                 -- 2: Absolute path
                 -- 3: Absolute path, with tilde as the home directory
@@ -142,6 +136,6 @@ return {
             lualine_y = {},
             lualine_z = { 'location' }
         },
-        extensions = { 'toggleterm', 'oil' }
+        extensions = { 'toggleterm', 'oil' ,'avante'}
     }
 }

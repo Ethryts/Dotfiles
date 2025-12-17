@@ -5,10 +5,11 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
     },
+    enabled = false,
     opts = function()
         vim.cmd [[cab chat CodeCompanionChat]]
         return {
-            display =  {
+            display = {
                 chat = {
                     window = {
                         width = 0.3,
@@ -26,7 +27,8 @@ return {
                     prompts = {
                         {
                             role = "system",
-                            content = "You are a autocorrect system for grammer and spelling. You transform rough notes into clear consise notes, without changing the meaning. Add filler words such as 'the' and 'a', and expand shorthand words, you can add punctuation such as commas and periods. You should not change the meaning of the notes, only make them more clear and consise. Formatting in markdown is allowed. putting items in a bulleted list is allowed. Clearly locate any follow up actions needed at the end of the notes as check boxes. Wrap the notes in a markdown code block. Do not include any other text outside of the code block."
+                            content =
+                            "You are a autocorrect system for grammer and spelling. You transform rough notes into clear consise notes, without changing the meaning. Add filler words such as 'the' and 'a', and expand shorthand words, you can add punctuation such as commas and periods. You should not change the meaning of the notes, only make them more clear and consise. Formatting in markdown is allowed. putting items in a bulleted list is allowed. Clearly locate any follow up actions needed at the end of the notes as check boxes. Wrap the notes in a markdown code block. Do not include any other text outside of the code block."
                         },
                         {
                             role = "user",

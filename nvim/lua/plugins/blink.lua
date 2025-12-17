@@ -10,6 +10,7 @@ return {
     -- optional: provides snippets for the snippet source
     dependencies = {
         'rafamadriz/friendly-snippets',
+        'Kaiser-Yang/blink-cmp-avante',
 
         { 'fang2hou/blink-copilot',           opts = {} },
         -- 'Kaiser-Yang/blink-cmp-avante',
@@ -54,7 +55,7 @@ return {
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
-            default = { 'lsp', 'snippets','path', 'buffer', },
+            default = { 'avante', 'lsp', 'snippets', 'path', 'buffer', },
             per_filetype = {
                 sql = { inherit_defaults = true, 'dictionary' }
             },
@@ -73,6 +74,11 @@ return {
                         -- * max_attempts = 2
                         -- * all other options are default
                     }
+                },
+                avante = {
+                    module = 'blink-cmp-avante',
+                    name= 'Avante',
+
                 },
 
                 -- avante = {
