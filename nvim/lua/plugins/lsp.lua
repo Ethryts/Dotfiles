@@ -44,7 +44,7 @@ return {
                 on_attach = function(_, bufnr)
                     local opts = { noremap = true, silent = true }
                     local function buf_set_option(name, value)
-                        vim.api.nvim_set_option_value( name, value, {buf=bufnr})
+                        vim.api.nvim_set_option_value(name, value, { buf = bufnr })
                     end
                     buf_set_option("omnisharp", "omnisharp")
                     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', require('omnisharp_extended').telescope_lsp_definition,
@@ -59,7 +59,7 @@ return {
                 end,
 
             },
-            gopls={
+            gopls = {
 
             },
             vtsls = {
@@ -117,8 +117,13 @@ return {
                                 reportAny = false,
                                 reportUnusedCallResult = 'information',
                             },
-
-                            extraPaths = require("lsp_env").python.extraPaths
+                            extraPaths = (function()
+                                local success, lsp_env = pcall(require, "lsp_env")
+                                if success and type(lsp_env) == "table" and lsp_env.python and lsp_env.python.extraPaths then
+                                    return lsp_env.python.extraPaths
+                                end
+                                return {}
+                            end)()
                         }
                     }
                 }
@@ -126,7 +131,7 @@ return {
         },
         config = function(_, opts)
             for lsp_name, config in pairs(opts) do
-                vim.lsp.config[lsp_name]  = config
+                vim.lsp.config[lsp_name] = config
                 if config['enabled'] == true then
                     vim.lsp.enable(lsp_name)
                 end
@@ -157,7 +162,7 @@ return {
 
             vim.diagnostic.config({
                 float = {
-                    source=true,
+                    source = true,
                 }
             })
 
@@ -174,12 +179,22 @@ return {
                     -- whatever other lsp config you want
                 end
             })
-
-
         end
 
     },
-    { "williamboman/mason.nvim",           opts = {} },
-    { "williamboman/mason-lspconfig.nvim", opts = {} },
+    { "williamboman/mason.nvim",          opts = {} },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        opts = {
+            ensure_installed = {
+                "marksman",
+                "lua_ls",
+                "bashls",
+                "vtsls",
+                "typescriptls",
+                "basedpyright",
+            }
+        }
+    },
 
 }
