@@ -6,7 +6,10 @@ return {
         opts = {
             presets = 'helix',
             spec = {
-                { "<leader>f", group = "find" } }
+                { "<leader>f", group = "find" },
+                { "<leader>a", group = "AI" },
+                { "<leader>c", group = "code actions" }
+            }
 
             -- your configuration comes here
             -- or leave it empty to use the default settings
