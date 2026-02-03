@@ -14,7 +14,6 @@ keymap('t', 'jk', '<C-\\><C-n>', opts())
 -- +++++++++++++++++++++
 -- Picker
 -- +++++++++++++++++++++
-local telescopeBuiltin = require('telescope.builtin')
 local fzf = require('fzf-lua')
 
 -- keymap('n', '<leader>ff', telescopeBuiltin.find_files, opts("Find File" ))
@@ -23,7 +22,6 @@ keymap('n', '<leader>fg', fzf.live_grep, opts("Find Grep"))
 keymap('n', '<leader>fc', fzf.commands, opts("Find Commands"))
 keymap('n', '<leader>fq', fzf.quickfix, opts("Find Quickfix"))
 -- keymap('n', '<leader>fq', telescopeBuiltin.pickers, opts("Find Pickers" ))
--- keymap('n', '<leader>ft', telescopeBuiltin.builtin, opts("Find Builtins" ))
 keymap('n', '<leader>fb', fzf.buffers, opts("Find Buffers"))
 keymap('n', '<leader>fh', fzf.help_tags, opts("Find Help Tags"))
 keymap('n', '<leader>fd', fzf.diagnostics_workspace, opts("Find Diagnostics"))
@@ -42,8 +40,8 @@ keymap("v", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refacto
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local diagnostic = vim.diagnostic
 keymap('n', '<leader>e', diagnostic.open_float, opts())
-keymap('n', '[d', diagnostic.goto_prev, opts())
-keymap('n', ']d', diagnostic.goto_next, opts())
+keymap('n', '[d', function() diagnostic.jump({ count = 1 }) end, opts())
+keymap('n', ']d', function() diagnostic.jump({ count = -1 }) end, opts())
 keymap('n', '<leader>q', diagnostic.setloclist, opts("Set Location List with Diagnostics"))
 
 -- +++++++++++++++++++++
