@@ -1,10 +1,12 @@
 return {
-
     'nvim-lualine/lualine.nvim',
+    lazy = false,
+    priority = 51,
     opts = {
         options = {
             icons_enabled = true,
             theme = 'auto',
+            always_show_tabline=false,
             component_separators = { left = '', right = '' },
             section_separators = { left = '', right = '' },
             disabled_filetypes = {
@@ -54,7 +56,7 @@ return {
                 symbols = {
                     modified = '', -- Text to show when the file is modified.
                     readonly = '', -- Text to show when the file is non-modifiable or readonly.
-                    unnamed = '', -- Text to show for unnamed buffers.
+                    unnamed = ' ', -- Text to show for unnamed buffers.
                     newfile = '', -- Text to show for new created file before first writting
                 }
             },
@@ -137,5 +139,11 @@ return {
             lualine_z = { 'location' }
         },
         extensions = { 'toggleterm', 'oil' ,'avante'}
-    }
+    },
+    config = function(_, opts)
+        vim.o.showtabline = 0
+        require('lualine').setup(opts)
+    end,
+
+
 }

@@ -1,8 +1,7 @@
 vim.opt.autoindent = true  -- Autoindent
 vim.opt.smartindent = true -- Autoindent
-vim.opt.tabstop = 4        -- tab
-vim.opt.shiftwidth = 4
-vim.opt.showtabline = 4
+vim.opt.tabstop = 2        -- tab
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.smd = false                              --turn off mode mesage
 vim.opt.nu = true                                -- number
@@ -19,6 +18,7 @@ vim.opt.termguicolors = true
 vim.opt.laststatus = 3
 vim.opt.filetype = 'on'
 -- vim.opt.fileformat = 'unix'
+-- vim.opt.winbar=" " -- Start with an empty winbar so that it doesn't require resize on load
 
 vim.g.health = { style = 'float' }
 vim.diagnostic.config({
@@ -31,5 +31,10 @@ vim.g.netrw_winsize = 20
 -- vim.env.HOME = vim.env.USERPROFILE
 vim.opt_global.winborder = "single"
 
--- aunmenu PopUp.How-to\ disable\ mouse
--- aunmenu PopUp.-1-
+
+vim.opt.shortmess:append("I") -- No intro message
+
+vim.schedule(function() -- Set showtabline after other plugins have loaded
+    vim.o.showtabline = 4
+end
+)
