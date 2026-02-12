@@ -1,11 +1,29 @@
 return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },     -- if you use the mini.nvim suite
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
       file_types = { 'markdown', 'codecompanion' },
+      code = {
+        conceal_delimiters = false,
+      },
+      patterns = {
+
+        markdown = {
+          disable = true,
+          directives = {
+            { name = 'conceal_lines' },
+            { id = 17,               name = 'conceal_lines' },
+            { id = 18,               name = 'conceal_lines' },
+          },
+        },
+      }
+      -- win_options = {
+      --   conceallevel = { default = 0, rendered = 0 },
+      -- }
+
     },
   },
   {
