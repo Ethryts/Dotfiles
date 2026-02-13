@@ -15,8 +15,13 @@ return {
       function()
         require("fzf-lua").files({
           cwd = "~/dev/",
-          -- cmd = "find . -maxdepth 2 -type d -not -path '*/.*'",
-          cmd = "fd --max-depth 2 --type d --hidden --exclude .git",
+          cmd = [[
+          (
+            fd --type d --exclude .git --max-depth 3 --exec sh -c 'test -d "{}/.git" && echo {}' 2>/dev/null
+          ) || (
+            fd --type d --exclude .git --max-depth 3 --exec sh -c 'test ! -d "{}/.git" && test ! -d "$(dirname {})/.git" && test ! -d "$(dirname $(dirname {}))/.git" && echo {}' 2>/dev/null
+          )
+          ]],
           previewer = false,
           fzf_opts = {
             ['--tiebreak'] = 'length',

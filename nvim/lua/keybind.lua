@@ -6,10 +6,10 @@ local function opts(desc)
 end
 
 -- Basic keybinds
-keymap("v", "p", '"_dP', opts()) -- visual mode paste over will delete to _ register and then paste
 keymap('i', 'jk', '<Esc>', opts("Exit insert mode"))
 keymap('t', 'jk', '<C-\\><C-n>', opts("Exit terminal mode"))
 
+keymap("v", "p", '"_dP', opts()) -- visual mode paste over will delete to _ register and then paste
 keymap('n', 'gp', '`[v`]', opts("Select last pasted content"))
 
 
