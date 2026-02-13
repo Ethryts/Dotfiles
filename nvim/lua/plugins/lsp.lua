@@ -9,11 +9,6 @@ return {
         filetypes = { "markdown", "quarto" }
       },
       -- copilot = {},
-      sqls = {
-      },
-      sqlls = {
-        enabled = false
-      },
       omnisharp = {
         cmd = { "omnisharp" }, -- Mason installs OmniSharp with this name by default
 
@@ -28,21 +23,19 @@ return {
             vim.api.nvim_set_option_value(name, value, { buf = bufnr })
           end
           buf_set_option("omnisharp", "omnisharp")
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', require('omnisharp_extended').telescope_lsp_definition,
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', require('omnisharp_extended').lsp_definitions,
             opts)
           vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi',
-            require('omnisharp_extended').telescope_lsp_implementation, opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', require('omnisharp_extended').telescope_lsp_references,
+            require('omnisharp_extended').lsp_implementation, opts)
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', require('omnisharp_extended').lsp_references,
             opts)
           vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D',
-            require('omnisharp_extended').telescope_lsp_type_definition, opts)
+            require('omnisharp_extended').lsp_type_definition, opts)
           -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
         end,
 
       },
-      gopls = {
-
-      },
+      gopls = {},
       vtsls = {
         settings = {
           complete_function_calls = true,
@@ -74,7 +67,6 @@ return {
 
       },
       ruff = {
-        enabled = false,
         init_options = {
           settings = {
             lint = {
@@ -85,7 +77,6 @@ return {
         }
       },
       basedpyright = {
-        enabled = true,
         settings = {
           basedpyright = {
             analysis = {
@@ -113,10 +104,8 @@ return {
     config = function(_, opts)
       for lsp_name, config in pairs(opts) do
         vim.lsp.config[lsp_name] = config
-        if config['enabled'] == true then
-          vim.lsp.enable(lsp_name)
-        end
       end
+
       local function get_quarto_resource_path()
         local function strsplit(s, delimiter)
           local result = {}
@@ -140,12 +129,6 @@ return {
         table.insert(lua_library_files, resource_path .. '/lua-types')
         table.insert(lua_plugin_paths, resource_path .. '/lua-plugin/plugin.lua')
       end
-
-      vim.diagnostic.config({
-        float = {
-          source = true,
-        }
-      })
 
 
 

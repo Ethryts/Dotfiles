@@ -42,7 +42,7 @@ return {
   },
   {
     "nvim-treesitter/playground",
-    command = "TSPlaygroundToggle",
+    cmd = "TSPlaygroundToggle",
     dependencies = "nvim-treesitter/nvim-treesitter"
   },
 }

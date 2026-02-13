@@ -1,6 +1,4 @@
 return {
-    "rcarriga/nvim-notify",
-    opt = {
-
-    }
+  "rcarriga/nvim-notify",
+  opts = {}
 }

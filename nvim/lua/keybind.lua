@@ -47,6 +47,6 @@ end, opts("List Workspace Folder"))
 
 keymap('n', '<leader>ca', lsp.code_action, opts("select code action"))
 keymap('n', '<leader>rn', lsp.rename, opts("rename symbol"))
-keymap('n', '<leader>cf', lsp.format, opts("format"))
+-- keymap('n', '<leader>cf', lsp.format, opts("format"))
 
 return M
