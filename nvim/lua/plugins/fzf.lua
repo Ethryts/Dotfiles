@@ -1,16 +1,45 @@
+local function diagnostics_with_toggle()
+  local fzf = require("fzf-lua")
+  local bufHasDiag = #vim.diagnostic.get(0) > 0
+  if not bufHasDiag then
+    fzf.diagnostics_workspace({
+      header = "Workspace Diagnostics (Press Ctrl-G to toggle Document Diagnostics)",
+      actions = {
+        ["ctrl-g"] = function()
+          fzf.diagnostics_document({
+            header = "Document Diagnostics (Press Ctrl-G to toggle Workspace Diagnostics)",
+            actions = { ["ctrl-g"] = diagnostics_with_toggle }
+          })
+        end,
+      },
+    })
+    return
+  end
+  fzf.diagnostics_document({
+    header = "Document Diagnostics (Press Ctrl-G to toggle Workspace Diagnostics)",
+    actions = {
+      ["ctrl-g"] = function()
+        fzf.diagnostics_workspace({
+          header = "Workspace Diagnostics (Press Ctrl-G to toggle Document Diagnostics)",
+          actions = { ["ctrl-g"] = diagnostics_with_toggle }
+        })
+      end,
+    },
+  })
+end
 return {
   "ibhagwan/fzf-lua",
   -- optional for icon support
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
-    { '<leader>ff', "<cmd>FzfLua files<cr>",                 "Find File" },
-    { '<leader>fg', "<cmd>FzfLua live_grep<cr>",             "Find Grep" },
-    { '<leader>fc', "<cmd>FzfLua commands<cr>",              "Find Commands" },
-    { '<leader>fq', "<cmd>FzfLua quickfix<cr>",              "Find Quickfix" },
-    { '<leader>fb', "<cmd>FzfLua buffers<cr>",               "Find Buffers" },
-    { '<leader>fh', "<cmd>FzfLua help_tags<cr>",             "Find Help Tags" },
-    { '<leader>fd', "<cmd>FzfLua diagnostics_workspace<cr>", "Find Diagnostics" },
-    { '<leader>ft', "<cmd>FzfLua builtin<cr>",               "Find Pickers" },
+    { '<leader>ff', "<cmd>FzfLua files<cr>",     "Find File" },
+    { '<leader>fg', "<cmd>FzfLua live_grep<cr>", "Find Grep" },
+    { '<leader>fc', "<cmd>FzfLua commands<cr>",  "Find Commands" },
+    { '<leader>fq', "<cmd>FzfLua quickfix<cr>",  "Find Quickfix" },
+    { '<leader>fb', "<cmd>FzfLua buffers<cr>",   "Find Buffers" },
+    { '<leader>fh', "<cmd>FzfLua help_tags<cr>", "Find Help Tags" },
+    { '<leader>fd', diagnostics_with_toggle,     "Find Diagnostics" },
+    { '<leader>ft', "<cmd>FzfLua builtin<cr>",   "Find Pickers" },
     { '<leader>fp',
       function()
         require("fzf-lua").files({
@@ -72,24 +101,27 @@ return {
   ---@type fzf-lua.config
   ---@diagnostic disable-next-line: missing-fields
   opts = {
-    fzf_opts = {
-      ["--bind"] = {
-        ["tab:toggle"] = "",
-        ["ctrl-space:toggle+down"] = "",
-      },
-    },
+    fzf_opts = {},
     keymap = {
       fzf = {
         ["ctrl-y"] = "accept",
         ["ctrl-u"] = "preview-page-up",
         ["ctrl-d"] = "preview-page-down",
+        ["tab"] = "toggle+down",
+        ["shift-tab"] = "up+toggle"
       },
       builtin = {
+        ["<F1>"] = "toggle-help",
         ["<C-v>"] = "file_vsplit",
         ["<C-x>"] = "file_split",
         ["<C-t>"] = "file_tabedit",
       }
     },
+    keymaps = {
+      prompt = "Keymaps> ",
+      ignore_patters = false,
+
+    }
   },
   config = function(_, opts)
     require("fzf-lua").setup(opts)
