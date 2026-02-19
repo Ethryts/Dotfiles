@@ -1,4 +1,8 @@
 return {
   "rcarriga/nvim-notify",
-  opts = {}
+  opts = {},
+  config = function(_, opts)
+    vim.notify = require("notify")
+    require("notify").setup(opts)
+  end
 }
