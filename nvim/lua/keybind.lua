@@ -9,7 +9,7 @@ end
 keymap('i', 'jk', '<Esc>', opts("Exit insert mode"))
 keymap('t', 'jk', '<C-\\><C-n>', opts("Exit terminal mode"))
 
-keymap("v", "p", '"_dP', opts()) -- visual mode paste over will delete to _ register and then paste
+keymap("v", "p", '"_dP', opts("Visual Mode Paste, maintains clipboard"))
 keymap('n', 'gp', '`[v`]', opts("Select last pasted content"))
 
 
@@ -17,9 +17,6 @@ keymap('n', '<leader>/', "<cmd>execute 'lvimgrep /'.@/.'/ % | lopen'<CR>",
   opts("Open Last search in local quick fix list"))
 
 local diagnostic = vim.diagnostic
-keymap('n', '<leader>e', diagnostic.open_float, opts())
--- keymap('n', '[d', function() diagnostic.jump({ count = 1 }) end, opts())
--- keymap('n', ']d', function() diagnostic.jump({ count = -1 }) end, opts())
 keymap('n', '<leader>q', diagnostic.setloclist, opts("Set Location List with Diagnostics"))
 
 -- +++++++++++++++++++++
